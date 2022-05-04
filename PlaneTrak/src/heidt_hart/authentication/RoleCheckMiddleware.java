@@ -1,8 +1,10 @@
 package heidt_hart.authentication;
 
 public class RoleCheckMiddleware extends Middleware {
+    @Override
     public boolean check(String id, String password) {
-        if (id.equals("admin@example.com")) {
+        String pattern = "a(\\w){4}";
+        if (id.matches(pattern)) {
             System.out.println("Hello, admin!");
             return true;
         }

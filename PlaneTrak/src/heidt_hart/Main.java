@@ -27,8 +27,8 @@ public class Main {
 
         // Authentication functionality
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        myAirportSingleton.register("admin@example.com", "admin_pass");
-        myAirportSingleton.register("user@example.com", "user_pass");
+        myAirportSingleton.register("ab52s", "admin_pass");
+        myAirportSingleton.register("jbl55", "user_pass");
 
         // All checks are linked. Client can build various chains using the same
         // components.
@@ -41,7 +41,7 @@ public class Main {
 
         boolean success;
         do {
-            System.out.print("Enter email: ");
+            System.out.print("Enter id: ");
             String email = reader.readLine();
             System.out.print("Input password: ");
             String password = reader.readLine();
