@@ -1,6 +1,8 @@
-import planes.CargoPlane;
-import planes.PassengerPlane;
-import planes.PlaneIF;
+package heidt_hart;
+
+import heidt_hart.planes.CargoPlane;
+import heidt_hart.planes.PassengerPlane;
+import heidt_hart.planes.PlaneIF;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -56,7 +58,7 @@ public class AirportSingleton{
 
     public PlaneIF removePlaneFromAirport(int arrayListSpot, int planeCarryValue){
         if(planesAtAirport.size() == 0){
-            System.out.println("No planes at airport.");
+            System.out.println("No heidt_hart.planes at airport.");
             return null;
         }
 

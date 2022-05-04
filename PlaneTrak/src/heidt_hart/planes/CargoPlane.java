@@ -1,4 +1,4 @@
-package planes;
+package heidt_hart.planes;
 
 public abstract class CargoPlane implements PlaneIF{
     private int cargoTonnage;

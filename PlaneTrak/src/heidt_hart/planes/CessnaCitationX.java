@@ -1,8 +1,8 @@
-package planes;
+package heidt_hart.planes;
 
-import planeparts.engine.EngineIF;
-import planeparts.fuselage.FuselageIF;
-import planeparts.wing.WingIF;
+import heidt_hart.planeparts.engine.EngineIF;
+import heidt_hart.planeparts.fuselage.FuselageIF;
+import heidt_hart.planeparts.wing.WingIF;
 
 public class CessnaCitationX extends PassengerPlane{
     private FuselageIF fuselage;

@@ -1,8 +1,10 @@
-import planefactories.AirbusA380Factory;
-import planefactories.Boeing757Factory;
-import planefactories.CessnaCitationXFactory;
-import planefactories.PlaneFactoryIF;
-import planes.PlaneIF;
+package heidt_hart;
+
+import heidt_hart.planefactories.AirbusA380Factory;
+import heidt_hart.planefactories.Boeing757Factory;
+import heidt_hart.planefactories.CessnaCitationXFactory;
+import heidt_hart.planefactories.PlaneFactoryIF;
+import heidt_hart.planes.PlaneIF;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,21 +23,21 @@ public class Main {
         PlaneFactoryIF myCessnaFactory = new CessnaCitationXFactory();
         PlaneFactoryIF myBoeingFactory = new Boeing757Factory();
 
-        //create planes for test
+        //create heidt_hart.planes for test
         PlaneIF myAirbus = myAirbusFactory.createPlane(400);
         PlaneIF myCessna = myCessnaFactory.createPlane(10);
         PlaneIF myBoeing = myBoeingFactory.createPlane(6000);
 
-        //add planes to airport
+        //add heidt_hart.planes to airport
         myAirportSingleton.addPlaneToAirport(myAirbus);
         myAirportSingleton.addPlaneToAirport(myCessna);
         myAirportSingleton.addPlaneToAirport(myBoeing);
 
-        //print cargo and passenger counts after planes created above have arrived
+        //print cargo and passenger counts after heidt_hart.planes created above have arrived
         System.out.println("Current Passengers Count at airport: " + myAirportSingleton.getPassengersAtAirport());
         System.out.println("Current Cargo Tonnage at airport: " + myAirportSingleton.getCargoAtAirport());
 
-        //print planes at airport
+        //print heidt_hart.planes at airport
         myAirportSingleton.printListOfPlanes();
 
         //demonstrate that if there are too few passengers or not enough cargo at airport,
@@ -49,7 +51,7 @@ public class Main {
         myAirportSingleton.printListOfPlanes();
         myAirportSingleton.removePlaneFromAirport(0, 2500);
 
-        //Print planes and cargo now that planes have left airport
+        //Print heidt_hart.planes and cargo now that heidt_hart.planes have left airport
         myAirportSingleton.printListOfPlanes();
         System.out.println("Current Passengers Count at airport: " + myAirportSingleton.getPassengersAtAirport());
         System.out.println("Current Cargo Tonnage at airport: " + myAirportSingleton.getCargoAtAirport());
