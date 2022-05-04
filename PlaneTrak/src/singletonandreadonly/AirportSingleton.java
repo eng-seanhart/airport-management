@@ -1,3 +1,5 @@
+package singletonandreadonly;
+
 import planes.CargoPlane;
 import planes.PassengerPlane;
 import planes.PlaneIF;
@@ -7,7 +9,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirportSingleton {
+public class AirportSingleton implements AirportIF{
 
     private static AirportSingleton airport = null;
 
@@ -31,6 +33,10 @@ public class AirportSingleton {
 
     public void addPropertyChangeListener(PropertyChangeListener pcl){
         support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl){
+        support.removePropertyChangeListener(pcl);
     }
 
     public void addPlaneToAirport(PlaneIF plane){
@@ -102,6 +108,10 @@ public class AirportSingleton {
 
     public void printListOfPlanes(){
         System.out.println(planesAtAirport.toString());
+    }
+
+    public List<PlaneIF> getPlanesAtAirport(){
+        return planesAtAirport;
     }
 
 
