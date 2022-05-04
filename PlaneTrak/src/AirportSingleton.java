@@ -1,5 +1,3 @@
-package singletonandreadonly;
-
 import planes.CargoPlane;
 import planes.PassengerPlane;
 import planes.PlaneIF;
@@ -9,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirportSingleton implements AirportIF{
+public class AirportSingleton{
 
     private static AirportSingleton airport = null;
 

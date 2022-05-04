@@ -1,4 +1,3 @@
-import singletonandreadonly.AirportSingleton;
 import planefactories.AirbusA380Factory;
 import planefactories.Boeing757Factory;
 import planefactories.CessnaCitationXFactory;
