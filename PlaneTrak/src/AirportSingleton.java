@@ -2,6 +2,8 @@ import planes.CargoPlane;
 import planes.PassengerPlane;
 import planes.PlaneIF;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class AirportSingleton {
     private int cargoAtAirport;
 
     private int passengersAtAirport;
-    private AirportSingleton(){
 
+    private static PropertyChangeSupport support;
+    private AirportSingleton(){
+        support = new PropertyChangeSupport(this);
     }
 
     public static AirportSingleton getAirport(){
@@ -25,14 +29,22 @@ public class AirportSingleton {
         return airport;
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener pcl){
+        support.addPropertyChangeListener(pcl);
+    }
+
     public void addPlaneToAirport(PlaneIF plane){
         if(plane instanceof CargoPlane){
             plane = (CargoPlane) plane;
             addCargoToAirport(((CargoPlane) plane).getCargoTonnage());
+            support.firePropertyChange("cargoDelivered", cargoAtAirport -
+                    ((CargoPlane) plane).getCargoTonnage(), cargoAtAirport);
             ((CargoPlane) plane).setCargoTonnage(0);
         }else{
             plane = (PassengerPlane) plane;
             addPassengersToAirport(((PassengerPlane) plane).getPassengerCount());
+            support.firePropertyChange("passengersArrived", passengersAtAirport -
+                    ((PassengerPlane) plane).getPassengerCount(), passengersAtAirport);
             ((PassengerPlane) plane).setPassengerCount(0);
         }
         planesAtAirport.add(plane);

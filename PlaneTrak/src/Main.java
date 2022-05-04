@@ -10,6 +10,12 @@ public class Main {
         //create singleton instance
         AirportSingleton myAirportSingleton = AirportSingleton.getAirport();
 
+        //create observer object
+        Observer observer = new Observer();
+
+        //add observer to singleton
+        myAirportSingleton.addPropertyChangeListener(observer);
+
         //create plane factories
         PlaneFactoryIF myAirbusFactory = new AirbusA380Factory();
         PlaneFactoryIF myCessnaFactory = new CessnaCitationXFactory();
