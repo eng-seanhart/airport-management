@@ -2,8 +2,8 @@ package heidt_hart;
 
 import heidt_hart.authentication.Middleware;
 import heidt_hart.authentication.RoleCheckMiddleware;
-import heidt_hart.authentication.ThrottlingMiddleware;
-import heidt_hart.authentication.UserExistsMiddleware;
+import heidt_hart.authentication.RequestHandlingMiddleware;
+import heidt_hart.authentication.CredentialMiddleware;
 import heidt_hart.planefactories.AirbusA380Factory;
 import heidt_hart.planefactories.Boeing757Factory;
 import heidt_hart.planefactories.CessnaCitationXFactory;
@@ -18,14 +18,35 @@ public class Main {
     public static void main(String[] args) throws IOException {
         //create singleton instance
         AirportSingleton myAirportSingleton = AirportSingleton.getAirport();
-        /*
-
 
         //create observer object
         Observer observer = new Observer();
 
         //add observer to singleton
         myAirportSingleton.addPropertyChangeListener(observer);
+
+        // Authentication functionality
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        myAirportSingleton.register("admin@example.com", "admin_pass");
+        myAirportSingleton.register("user@example.com", "user_pass");
+
+        // All checks are linked. Client can build various chains using the same
+        // components.
+        Middleware middleware = new RequestHandlingMiddleware(2);
+        middleware.linkWith(new CredentialMiddleware(myAirportSingleton))
+                .linkWith(new RoleCheckMiddleware());
+
+        // Server gets a chain from client code.
+        myAirportSingleton.setMiddleware(middleware);
+
+        boolean success;
+        do {
+            System.out.print("Enter email: ");
+            String email = reader.readLine();
+            System.out.print("Input password: ");
+            String password = reader.readLine();
+            success = myAirportSingleton.logIn(email, password);
+        } while (!success);
 
         //create plane factories
         PlaneFactoryIF myAirbusFactory = new AirbusA380Factory();
@@ -64,29 +85,5 @@ public class Main {
         myAirportSingleton.printListOfPlanes();
         System.out.println("Current Passengers Count at airport: " + myAirportSingleton.getPassengersAtAirport());
         System.out.println("Current Cargo Tonnage at airport: " + myAirportSingleton.getCargoAtAirport());
-
-         */
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        myAirportSingleton.register("admin@example.com", "admin_pass");
-        myAirportSingleton.register("user@example.com", "user_pass");
-
-        // All checks are linked. Client can build various chains using the same
-        // components.
-        Middleware middleware = new ThrottlingMiddleware(2);
-        middleware.linkWith(new UserExistsMiddleware(myAirportSingleton))
-                .linkWith(new RoleCheckMiddleware());
-
-        // Server gets a chain from client code.
-        myAirportSingleton.setMiddleware(middleware);
-
-        boolean success;
-        do {
-            System.out.print("Enter email: ");
-            String email = reader.readLine();
-            System.out.print("Input password: ");
-            String password = reader.readLine();
-            success = myAirportSingleton.logIn(email, password);
-        } while (!success);
-
     }
 }

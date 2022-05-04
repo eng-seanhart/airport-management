@@ -18,6 +18,10 @@ public class AirportSingleton{
 
     private List<PlaneIF> planesAtAirport = new ArrayList<>();
 
+    private Map<String, String> employees = new HashMap<>();
+
+    private Middleware middleware;
+
     private int cargoAtAirport;
 
     private int passengersAtAirport;
@@ -117,25 +121,12 @@ public class AirportSingleton{
         return planesAtAirport;
     }
 
-    // Server
-    // Chain of Command
-    private Map<String, String> users = new HashMap<>();
-    private Middleware middleware;
-
-    /**
-     * Client passes a chain of object to server. This improves flexibility and
-     * makes testing the server class easier.
-     */
     public void setMiddleware(Middleware middleware) {
         this.middleware = middleware;
     }
 
-    /**
-     * Server gets email and password from client and sends the authorization
-     * request to the chain.
-     */
-    public boolean logIn(String email, String password) {
-        if (middleware.check(email, password)) {
+    public boolean logIn(String id, String password) {
+        if (middleware.check(id, password)) {
             System.out.println("Authorization have been successful!");
 
             // Do something useful here for authorized users.
@@ -145,19 +136,15 @@ public class AirportSingleton{
         return false;
     }
 
-    public void register(String email, String password) {
-        users.put(email, password);
+    public void register(String id, String password) {
+        employees.put(id, password);
     }
 
-    public boolean hasEmail(String email) {
-        return users.containsKey(email);
+    public boolean hasEmail(String id) {
+        return employees.containsKey(id);
     }
 
-    public boolean isValidPassword(String email, String password) {
-        return users.get(email).equals(password);
+    public boolean isValidPassword(String id, String password) {
+        return employees.get(id).equals(password);
     }
-
-
-
-
 }
