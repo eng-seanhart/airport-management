@@ -16,9 +16,10 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        /*
         //create singleton instance
         AirportSingleton myAirportSingleton = AirportSingleton.getAirport();
+        /*
+
 
         //create observer object
         Observer observer = new Observer();
@@ -66,20 +67,17 @@ public class Main {
 
          */
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Server server;
-
-        server = new Server();
-        server.register("admin@example.com", "admin_pass");
-        server.register("user@example.com", "user_pass");
+        myAirportSingleton.register("admin@example.com", "admin_pass");
+        myAirportSingleton.register("user@example.com", "user_pass");
 
         // All checks are linked. Client can build various chains using the same
         // components.
         Middleware middleware = new ThrottlingMiddleware(2);
-        middleware.linkWith(new UserExistsMiddleware(server))
+        middleware.linkWith(new UserExistsMiddleware(myAirportSingleton))
                 .linkWith(new RoleCheckMiddleware());
 
         // Server gets a chain from client code.
-        server.setMiddleware(middleware);
+        myAirportSingleton.setMiddleware(middleware);
 
         boolean success;
         do {
@@ -87,7 +85,7 @@ public class Main {
             String email = reader.readLine();
             System.out.print("Input password: ");
             String password = reader.readLine();
-            success = server.logIn(email, password);
+            success = myAirportSingleton.logIn(email, password);
         } while (!success);
 
     }
