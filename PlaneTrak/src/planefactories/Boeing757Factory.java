@@ -26,7 +26,7 @@ public class Boeing757Factory implements PlaneFactoryIF{
     }
 
     @Override
-    public PlaneIF createPlane(int passengerCount) {
-        return new FreighterBoeing757(createFuselage(), createEngine(), createWings(), passengerCount);
+    public PlaneIF createPlane(int cargoTonnage) {
+        return new FreighterBoeing757(createFuselage(), createEngine(), createWings(), cargoTonnage);
     }
 }
