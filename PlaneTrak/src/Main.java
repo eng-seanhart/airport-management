@@ -48,10 +48,5 @@ public class Main {
         System.out.println("Current Passengers Count at airport: " + myAirportSingleton.getPassengersAtAirport());
         System.out.println("Current Cargo Tonnage at airport: " + myAirportSingleton.getCargoAtAirport());
 
-
-
-
-
-
     }
 }
