@@ -1,14 +1,22 @@
 package heidt_hart;
 
+import heidt_hart.authentication.Middleware;
+import heidt_hart.authentication.RoleCheckMiddleware;
+import heidt_hart.authentication.ThrottlingMiddleware;
+import heidt_hart.authentication.UserExistsMiddleware;
 import heidt_hart.planefactories.AirbusA380Factory;
 import heidt_hart.planefactories.Boeing757Factory;
 import heidt_hart.planefactories.CessnaCitationXFactory;
 import heidt_hart.planefactories.PlaneFactoryIF;
 import heidt_hart.planes.PlaneIF;
 
-public class Main {
-    public static void main(String[] args) {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+public class Main {
+    public static void main(String[] args) throws IOException {
+        /*
         //create singleton instance
         AirportSingleton myAirportSingleton = AirportSingleton.getAirport();
 
@@ -55,6 +63,32 @@ public class Main {
         myAirportSingleton.printListOfPlanes();
         System.out.println("Current Passengers Count at airport: " + myAirportSingleton.getPassengersAtAirport());
         System.out.println("Current Cargo Tonnage at airport: " + myAirportSingleton.getCargoAtAirport());
+
+         */
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Server server;
+
+        server = new Server();
+        server.register("admin@example.com", "admin_pass");
+        server.register("user@example.com", "user_pass");
+
+        // All checks are linked. Client can build various chains using the same
+        // components.
+        Middleware middleware = new ThrottlingMiddleware(2);
+        middleware.linkWith(new UserExistsMiddleware(server))
+                .linkWith(new RoleCheckMiddleware());
+
+        // Server gets a chain from client code.
+        server.setMiddleware(middleware);
+
+        boolean success;
+        do {
+            System.out.print("Enter email: ");
+            String email = reader.readLine();
+            System.out.print("Input password: ");
+            String password = reader.readLine();
+            success = server.logIn(email, password);
+        } while (!success);
 
     }
 }
